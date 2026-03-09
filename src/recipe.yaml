@@ -28,6 +28,8 @@ params:
     default: ""
   telegram_bot_token_loomplus:
     required: true
+  telegram_bot_token_scheduler:
+    required: true
   loomplus_mcp_url:
     default: "https://loomplus-5rwim.ondigitalocean.app/api/mcp"
   loomplus_mcp_access_token:
@@ -64,6 +66,7 @@ openclaw:
 
 workspaces:
   - name: "${project_name}"
+    assets: "./assets"
 
 agents:
   - workspace: "${project_name}"
@@ -71,26 +74,6 @@ agents:
     model: "${agent_model}"
 
 files:
-  - workspace: "${project_name}"
-    path: "AGENTS.md"
-    overwrite: true
-    content_from: "./meetingbot-assets/AGENTS.md"
-
-  - workspace: "${project_name}"
-    path: "IDENTITY.md"
-    overwrite: true
-    content_from: "./meetingbot-assets/IDENTITY.md"
-
-  - workspace: "${project_name}"
-    path: "SOUL.md"
-    overwrite: true
-    content_from: "./meetingbot-assets/SOUL.md"
-
-  - workspace: "${project_name}"
-    path: "TOOLS.md"
-    overwrite: true
-    content_from: "./meetingbot-assets/TOOLS.md"
-
   - workspace: "${project_name}"
     path: "config/mcporter.json"
     overwrite: true
@@ -114,44 +97,15 @@ files:
       }
 
   - workspace: "${project_name}"
-    path: "scripts/fireflies_minutes.mjs"
+    path: "skills/meeting-scheduler/scripts/start-scheduling-server.sh"
     overwrite: true
-    content_from: "./meetingbot-assets/scripts/fireflies_minutes.mjs"
-
-  - workspace: "${project_name}"
-    path: "scripts/generate_daily_summary.mjs"
-    overwrite: true
-    content_from: "./meetingbot-assets/scripts/generate_daily_summary.mjs"
-
-  - workspace: "${project_name}"
-    path: "scripts/log_group_message.sh"
-    overwrite: true
-    content_from: "./meetingbot-assets/scripts/log_group_message.sh"
-
-  - workspace: "${project_name}"
-    path: "scripts/scheduling.mjs"
-    overwrite: true
-    content_from: "./meetingbot-assets/scripts/scheduling.mjs"
-
-  - workspace: "${project_name}"
-    path: "scripts/scheduling-callback-server.mjs"
-    overwrite: true
-    content_from: "./meetingbot-assets/scripts/scheduling-callback-server.mjs"
-
-  - workspace: "${project_name}"
-    path: "scripts/start-scheduling-server.sh"
-    overwrite: true
-    content_from: "./meetingbot-assets/scripts/start-scheduling-server.sh"
-
-  - workspace: "${project_name}"
-    path: "scripts/lib/loomplus.js"
-    overwrite: true
-    content_from: "./meetingbot-assets/scripts/lib/loomplus.js"
-
-  - workspace: "${project_name}"
-    path: "scripts/lib/googleMeeting.js"
-    overwrite: true
-    content_from: "./meetingbot-assets/scripts/lib/googleMeeting.js"
+    content: |
+      #!/bin/bash
+      # Start the scheduling callback server
+      # Fill in your actual bot tokens before use
+      export SCHEDULER_BOT_TOKEN="${telegram_bot_token_scheduler}"
+      export LOOMPLUS_BOT_TOKEN="${telegram_bot_token_loomplus}"
+      exec node "$(dirname "$0")/scheduling-callback-server.mjs"
 
 channels:
   - channel: "telegram"

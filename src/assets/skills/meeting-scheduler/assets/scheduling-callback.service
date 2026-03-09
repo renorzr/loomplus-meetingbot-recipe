@@ -1,0 +1,13 @@
+[Unit]
+Description=Scheduling Callback Server for MeetingBot
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /path/to/scripts/start-scheduling-server.sh
+Restart=always
+RestartSec=5
+Environment=PORT=3456
+
+[Install]
+WantedBy=multi-user.target

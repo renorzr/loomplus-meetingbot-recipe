@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "loomplus": {
+      "description": "LoomPlus MCP",
+      "url": "https://YOUR_LOOMPLUS_HOST/api/mcp?accessToken=YOUR_ACCESS_TOKEN"
+    }
+  }
+}
