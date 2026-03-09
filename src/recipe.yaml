@@ -1,0 +1,159 @@
+version: "1"
+name: "meetingbot-local"
+
+params:
+  openclaw_version:
+    default: "2026.2.9"
+  project_name:
+    default: "workspace-meeting"
+  agent_name:
+    default: "loomplus-meeting"
+  agent_model:
+    default: "anthropic/claude-opus-4-6"
+  auth_choice:
+    default: "openai-api-key"
+  openai_api_key:
+    default: ""
+  anthropic_api_key:
+    default: ""
+  openrouter_api_key:
+    default: ""
+  xai_api_key:
+    default: ""
+  gemini_api_key:
+    default: ""
+  ai_gateway_api_key:
+    default: ""
+  cloudflare_ai_gateway_api_key:
+    default: ""
+  telegram_bot_token_loomplus:
+    required: true
+  loomplus_mcp_url:
+    default: "https://loomplus-5rwim.ondigitalocean.app/api/mcp"
+  loomplus_mcp_access_token:
+    required: true
+  fireflies_api_key:
+    default: ""
+  fireflies_user_email:
+    default: ""
+
+openclaw:
+  bin: "openclaw"
+  version: "${openclaw_version}"
+  install: "never"
+  commands:
+    enable_plugin: "openclaw plugins enable telegram"
+  bootstrap:
+    auth_choice: "${auth_choice}"
+    openai_api_key: "${openai_api_key}"
+    anthropic_api_key: "${anthropic_api_key}"
+    openrouter_api_key: "${openrouter_api_key}"
+    xai_api_key: "${xai_api_key}"
+    gemini_api_key: "${gemini_api_key}"
+    ai_gateway_api_key: "${ai_gateway_api_key}"
+    cloudflare_ai_gateway_api_key: "${cloudflare_ai_gateway_api_key}"
+    mode: "local"
+    flow: "quickstart"
+    accept_risk: true
+    non_interactive: true
+    skip_channels: true
+    skip_skills: true
+    skip_health: true
+    skip_ui: true
+    skip_daemon: true
+
+workspaces:
+  - name: "${project_name}"
+
+agents:
+  - workspace: "${project_name}"
+    name: "${agent_name}"
+    model: "${agent_model}"
+
+files:
+  - workspace: "${project_name}"
+    path: "AGENTS.md"
+    overwrite: true
+    content_from: "./meetingbot-assets/AGENTS.md"
+
+  - workspace: "${project_name}"
+    path: "IDENTITY.md"
+    overwrite: true
+    content_from: "./meetingbot-assets/IDENTITY.md"
+
+  - workspace: "${project_name}"
+    path: "SOUL.md"
+    overwrite: true
+    content_from: "./meetingbot-assets/SOUL.md"
+
+  - workspace: "${project_name}"
+    path: "TOOLS.md"
+    overwrite: true
+    content_from: "./meetingbot-assets/TOOLS.md"
+
+  - workspace: "${project_name}"
+    path: "config/mcporter.json"
+    overwrite: true
+    content: |
+      {
+        "mcpServers": {
+          "loomplus": {
+            "description": "LoomPlus MCP",
+            "url": "${loomplus_mcp_url}?accessToken=${loomplus_mcp_access_token}"
+          }
+        }
+      }
+
+  - workspace: "${project_name}"
+    path: "config/fireflies.json"
+    overwrite: true
+    content: |
+      {
+        "apiKey": "${fireflies_api_key}",
+        "userEmail": "${fireflies_user_email}"
+      }
+
+  - workspace: "${project_name}"
+    path: "scripts/fireflies_minutes.mjs"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/fireflies_minutes.mjs"
+
+  - workspace: "${project_name}"
+    path: "scripts/generate_daily_summary.mjs"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/generate_daily_summary.mjs"
+
+  - workspace: "${project_name}"
+    path: "scripts/log_group_message.sh"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/log_group_message.sh"
+
+  - workspace: "${project_name}"
+    path: "scripts/scheduling.mjs"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/scheduling.mjs"
+
+  - workspace: "${project_name}"
+    path: "scripts/scheduling-callback-server.mjs"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/scheduling-callback-server.mjs"
+
+  - workspace: "${project_name}"
+    path: "scripts/start-scheduling-server.sh"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/start-scheduling-server.sh"
+
+  - workspace: "${project_name}"
+    path: "scripts/lib/loomplus.js"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/lib/loomplus.js"
+
+  - workspace: "${project_name}"
+    path: "scripts/lib/googleMeeting.js"
+    overwrite: true
+    content_from: "./meetingbot-assets/scripts/lib/googleMeeting.js"
+
+channels:
+  - channel: "telegram"
+    account: "loomplus"
+    token: "${telegram_bot_token_loomplus}"

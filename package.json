@@ -1,0 +1,20 @@
+{
+  "name": "loomplus-meetingbot-recipe",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "test:unit": "node --test \"tests/unit/**/*.test.mjs\"",
+    "test:integration": "node --test \"tests/integration/**/*.test.mjs\"",
+    "test:recipe": "node --test tests/recipe/recipe-smoke.test.mjs",
+    "check:syntax": "node --check recipe/meetingbot-assets/scripts/fireflies_minutes.mjs && node --check recipe/meetingbot-assets/scripts/generate_daily_summary.mjs && node --check recipe/meetingbot-assets/scripts/scheduling.mjs && node --check recipe/meetingbot-assets/scripts/scheduling-callback-server.mjs && node --check recipe/meetingbot-assets/scripts/lib/loomplus.js && node --check recipe/meetingbot-assets/scripts/lib/googleMeeting.js && bash -n recipe/meetingbot-assets/scripts/log_group_message.sh && bash -n recipe/meetingbot-assets/scripts/start-scheduling-server.sh"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "telegram-api-mock-server": "^0.1.6"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}
