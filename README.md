@@ -44,7 +44,7 @@ clawchef validate src/recipe.yaml
 执行安装（从 `.env` 读取参数）：
 
 ```bash
-clawchef cook src/recipe.yaml -s
+clawchef cook src/recipe.yaml
 ```
 
 如果你更喜欢命令行显式传参，也可以继续使用 `--var`。
@@ -75,7 +75,7 @@ clawchef cook src/recipe.yaml -s
 示例（自定义工作区和模型）：
 
 ```bash
-clawchef cook src/recipe.yaml -s \
+clawchef cook src/recipe.yaml \
   --var "project_name=my-meeting-workspace" \
   --var "agent_name=my-meeting-bot" \
   --var "agent_model=anthropic/claude-opus-4-6" \
