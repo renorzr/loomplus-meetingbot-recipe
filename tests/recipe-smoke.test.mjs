@@ -17,8 +17,8 @@ import {
   waitForOutboundMessage,
 } from "./helpers.mjs";
 
-const ROOT = path.resolve(import.meta.dirname, "..", "..");
-const RECIPE_FILE = path.join(ROOT, "src", "recipe.yaml");
+const ROOT = path.resolve(import.meta.dirname, "..");
+const RECIPE_FILE = path.join(ROOT, "recipe.yaml");
 const TELEGRAM_BOT_TOKEN = process.env.CLAWCHEF_VAR_TELEGRAM_BOT_TOKEN_LOOMPLUS;
 const TELEGRAM_CA_CERT = process.env.TELEGRAM_MOCK_CA_CERT || "/etc/telegram-mock/test-ca.crt";
 
