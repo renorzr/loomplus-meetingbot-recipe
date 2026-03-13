@@ -20,8 +20,6 @@
 前置要求：
 
 - Node.js >= 22
-- 已安装 `openclaw`
-- 已安装 `clawchef`
 
 推荐先使用 `.env` 管理参数（避免每次手动输入 `--var`）：
 
@@ -35,16 +33,11 @@ cp .env.example .env
 - `CLAWCHEF_VAR_LOOMPLUS_MCP_ACCESS_TOKEN`
 - 以及你选择的模型密钥（例如 `CLAWCHEF_VAR_OPENAI_API_KEY`）
 
-先校验 recipe：
-
-```bash
-clawchef validate src/recipe.yaml
-```
 
 执行安装（从 `.env` 读取参数）：
 
 ```bash
-clawchef cook src/recipe.yaml
+npx clawchef cook https://github.com/renorzr/loomplus-meetingbot-recipe
 ```
 
 如果你更喜欢命令行显式传参，也可以继续使用 `--var`。
